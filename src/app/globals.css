@@ -1,0 +1,388 @@
+@import "tailwindcss";
+
+/*
+  Design tokens.
+  --color-red is the brief's fallback (#C8202F). When the real logo arrives,
+  sample its red and change it here; hover and on-dark tints follow from it.
+*/
+@theme {
+  --color-ink: #0e0e10;
+  --color-ink-raised: #18181b;
+  --color-ink-line: #2c2c31;
+  --color-paper: #ffffff;
+  --color-stone: #f4f4f2;
+  --color-line: #dededa;
+  --color-red: #c8202f;
+  --color-red-deep: #a41824;
+  --color-red-soft: #f47781;
+  --color-body: #3a3a40;
+  --color-muted: #5f5f67;
+  --color-mist: #bcbcc4;
+
+  --font-sans: var(--font-inter), Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --breakpoint-xs: 26rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    line-height: 1.15;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-red);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: #ffffff;
+  }
+
+  ::selection {
+    background: var(--color-red);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 40rem) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Type scale. H1 is 32-36px on phones, 40-56px on desktop. */
+  .h1 {
+    font-size: clamp(2rem, 1.2rem + 3.4vw, 3.5rem);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  .h2 {
+    font-size: clamp(1.625rem, 1.25rem + 1.6vw, 2.375rem);
+    letter-spacing: -0.022em;
+  }
+  .h3 {
+    font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.4375rem);
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+  }
+  .lead {
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0.8rem 1.6rem;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    border-radius: 3px;
+    border: 1.5px solid transparent;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+    text-align: center;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-red {
+    background: var(--color-red);
+    color: #fff;
+  }
+  .btn-red:hover {
+    background: var(--color-red-deep);
+  }
+  .btn-outline-light {
+    border-color: rgb(255 255 255 / 0.55);
+    color: #fff;
+  }
+  .btn-outline-light:hover {
+    border-color: #fff;
+    background: rgb(255 255 255 / 0.08);
+  }
+  .btn-outline-dark {
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+  .btn-outline-dark:hover {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-sm {
+    min-height: 2.75rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Text links inside copy */
+  .link {
+    color: var(--color-red);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    color: var(--color-red-deep);
+    text-decoration-thickness: 2px;
+  }
+  .on-dark .link {
+    color: #fff;
+    text-decoration-color: var(--color-red);
+    text-decoration-thickness: 2px;
+  }
+  .on-dark .link:hover {
+    color: var(--color-red-soft);
+  }
+
+  /* Red accent rule used beneath H1s and section headings */
+  .rule-red {
+    display: block;
+    width: 4.5rem;
+    height: 4px;
+    background: var(--color-red);
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(90rem 40rem at 85% -10%, rgb(200 32 47 / 0.22), transparent 60%),
+      radial-gradient(60rem 30rem at 0% 110%, rgb(255 255 255 / 0.06), transparent 60%),
+      linear-gradient(180deg, #131316 0%, var(--color-ink) 100%);
+    color: #fff;
+    overflow: hidden;
+  }
+  /*
+    Scrim over hero photos. Phones get an even wash because the copy runs the
+    full width. From 64rem the copy sits left, so the scrim is heavy there and
+    clears toward the right, where the photos keep their subject.
+  */
+  .hero-photo-overlay {
+    background:
+      linear-gradient(180deg, rgb(14 14 16 / 0.35) 0%, transparent 30%, rgb(14 14 16 / 0.3) 100%),
+      rgb(14 14 16 / 0.62);
+  }
+  @media (min-width: 64rem) {
+    .hero-photo-overlay {
+      background:
+        linear-gradient(180deg, rgb(14 14 16 / 0.55) 0%, transparent 26%, transparent 72%, rgb(14 14 16 / 0.5) 100%),
+        linear-gradient(90deg, rgb(14 14 16 / 0.9) 0%, rgb(14 14 16 / 0.72) 45%, rgb(14 14 16 / 0.22) 80%, rgb(14 14 16 / 0.12) 100%);
+    }
+  }
+
+  /* FAQ accordion (native details/summary) */
+  .faq details {
+    border-bottom: 1px solid var(--color-line);
+  }
+  .faq details:first-of-type {
+    border-top: 1px solid var(--color-line);
+  }
+  .faq summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1.1875rem;
+    line-height: 1.35;
+    color: var(--color-ink);
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary:hover {
+    color: var(--color-red);
+  }
+  .faq .faq-icon {
+    flex: none;
+    margin-top: 0.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-red);
+    transition: transform 200ms ease;
+  }
+  .faq details[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq .faq-answer {
+    padding: 0 2.75rem 1.5rem 0;
+    max-width: 46rem;
+  }
+  @supports (interpolate-size: allow-keywords) {
+    .faq details {
+      interpolate-size: allow-keywords;
+    }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size 260ms ease,
+        content-visibility 260ms allow-discrete;
+    }
+    .faq details[open]::details-content {
+      block-size: auto;
+    }
+  }
+
+  /* Long-form copy: blog posts, legal pages, practice intros */
+  .prose-site {
+    max-width: 44rem;
+  }
+  .prose-site > * + * {
+    margin-top: 1.15em;
+  }
+  .prose-site h2 {
+    font-size: clamp(1.5rem, 1.3rem + 0.9vw, 1.9375rem);
+    margin-top: 2.2em;
+  }
+  .prose-site h3 {
+    font-size: 1.25rem;
+    margin-top: 1.8em;
+  }
+  .prose-site h2 + *,
+  .prose-site h3 + * {
+    margin-top: 0.7em;
+  }
+  .prose-site ul,
+  .prose-site ol {
+    padding-left: 1.3rem;
+  }
+  .prose-site ul {
+    list-style: disc;
+  }
+  .prose-site ol {
+    list-style: decimal;
+  }
+  .prose-site li + li {
+    margin-top: 0.45em;
+  }
+  .prose-site li::marker {
+    color: var(--color-red);
+  }
+  .prose-site a {
+    color: var(--color-red);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .prose-site a:hover {
+    color: var(--color-red-deep);
+    text-decoration-thickness: 2px;
+  }
+  .prose-site strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* Form fields */
+  .field {
+    width: 100%;
+    min-height: 3.125rem;
+    padding: 0.7rem 0.9rem;
+    background: #fff;
+    border: 1.5px solid #8b8b93;
+    border-radius: 3px;
+    color: var(--color-ink);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .field:hover {
+    border-color: var(--color-ink);
+  }
+  .field:focus-visible {
+    outline: 2px solid var(--color-red);
+    outline-offset: 1px;
+    border-color: var(--color-red);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-red);
+  }
+  .label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-ink);
+  }
+
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1.1rem;
+    background: #fff;
+    color: var(--color-ink);
+    font-weight: 600;
+    border-radius: 3px;
+    box-shadow: 0 6px 24px rgb(0 0 0 / 0.3);
+    transition: top 120ms ease;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
